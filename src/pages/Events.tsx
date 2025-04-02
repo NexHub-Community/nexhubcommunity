@@ -159,15 +159,23 @@ const Events = () => {
                   <div className="md:w-3/4 p-6">
                     <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{event.name}</h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">{event.description}</p>
-                    <Link 
-                      to={`/events/${event.id}`} 
-                      className="inline-flex items-center px-6 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
-                    >
-                      Register Now
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </Link>
+                    <div className="flex flex-wrap gap-3">
+                      <Link 
+                        to={`/events/${event.id}`} 
+                        className="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                      >
+                        View Details
+                      </Link>
+                      <Link 
+                        to={`/events/${event.id}/register`} 
+                        className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors"
+                      >
+                        Register Now
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}

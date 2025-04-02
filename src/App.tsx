@@ -14,6 +14,8 @@ const Gallery = lazy(() => import('./pages/Gallery'));
 const Team = lazy(() => import('./pages/Team'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Join = lazy(() => import('./pages/Join'));
+const EventDetail = lazy(() => import('./pages/EventDetail'));
+const EventRegistration = lazy(() => import('./pages/EventRegistration'));
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/events/:eventId" element={<EventDetail />} />
+            <Route path="/events/:eventId/register" element={<EventRegistration />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/team" element={<Team />} />
             <Route path="/contact" element={<Contact />} />
