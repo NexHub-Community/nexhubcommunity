@@ -110,7 +110,6 @@ const Team = () => {
       image: arnavImg,
       linkedin: "https://www.linkedin.com/in/arnav-bhokre-a09482250",
       instagram: "https://www.instagram.com/arnav_bhokre2813?igsh=MWl3bmw2bjd6MTlkNQ==",
-      github: 
     },
     {
       id: 5,
