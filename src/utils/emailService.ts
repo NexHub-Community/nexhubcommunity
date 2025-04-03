@@ -36,18 +36,18 @@ export const sendEventRegistrationEmail = async (data: EmailData): Promise<boole
 
     // Configure SMTP transport
     const transporter = createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: process.env.SMTP_SECURE === 'true',
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // true for 465, false for other ports
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
+        user: 'noreply.nexhub@gmail.com',
+        pass: process.env.SMTP_PASSWORD, // Use an app password rather than account password
       },
     });
 
     // Send the email
     await transporter.sendMail({
-      from: `"NexHub Community" <${process.env.SMTP_FROM_EMAIL}>`,
+      from: '"NexHub Community" <noreply.nexhub@gmail.com>',
       to: data.email,
       subject: `Registration Confirmation for ${data.eventName}`,
       html: getEmailTemplate(data, registrationId),
