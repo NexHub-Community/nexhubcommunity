@@ -97,7 +97,7 @@ const Team = () => {
     {
       id: 3,
       name: "Utkarsh Dave",
-      role: "Media Head",
+      role: "Head of Media and Content",
       image: utkarshImg,
       linkedin: "https://www.linkedin.com/in/utkarsh-dave-8770b7226?trk=contact-info",
       instagram: "https://www.instagram.com/ud_hsraktu?igsh=ejl3ZnJybjQ0b3Fs&utm_source=qr",
@@ -146,23 +146,6 @@ const Team = () => {
       linkedin: "https://www.linkedin.com/in/mayank-matkar-042003k?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       instagram: "https://www.instagram.com/mayank_matkar",
         },
-        {
-      name: "Shrey Patidar",
-      role: "Treasurer",
-      image: shreyImg,
-      linkedin: "https://www.linkedin.com/in/shrey-patidar-b01000200/",
-      instagram: "https://www.instagram.com/shrey_patidar",
-      github: "https://github.com/shrey-patidar"
-    },
-    {
-      id: 6,
-      name: "Mitali Rampurkar",
-      role: "General Secretary",
-      image: mitaliImg,
-      linkedin: "https://www.linkedin.com/in/mitali-rampurkar-8b18b4303?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-      instagram: "https://www.instagram.com/mitali.2708__",
-      
-    },
 /*{
 id: 7,
       name: "Tarang upadhyay",
