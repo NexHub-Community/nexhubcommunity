@@ -3,8 +3,8 @@ import React from 'react';
 
 // Import team member images
 import shivamImg from '../assets/MembersImages/shivam.jpg'; 
-import namanImg from '../assets/MembersImages/naman.jpg';
-import vaidicImg from '../assets/MembersImages/vaidic.jpg';
+//import namanImg from '../assets/MembersImages/naman.jpg';
+//import vaidicImg from '../assets/MembersImages/vaidic.jpg';
 import utkarshImg from '../assets/MembersImages/utkarsh.jpeg';
 import mayankImg from '../assets/MembersImages/mayank.jpg';
 import arnavImg from '../assets/MembersImages/arnav.jpg';
@@ -149,7 +149,7 @@ const Team = () => {
       instagram: "https://www.instagram.com/mayank_matkar",
       
     },
- /*{
+/*{
 id: 7,
       name: "Tarang upadhyay",
       role: "",
