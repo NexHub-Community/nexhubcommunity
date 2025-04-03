@@ -137,16 +137,31 @@ const Team = () => {
       image: arnavImg,
       linkedin: "https://www.linkedin.com/in/arnav-bhokre-a09482250",
       instagram: "https://www.instagram.com/arnav_bhokre2813?igsh=MWl3bmw2bjd6MTlkNQ==",
-},
-    
+}    
     
 {
-      id: 5,
+      id:
       name: "Mayank Matkar",
       role: "Head of Technical Development",
       image: mayankImg,
       linkedin: "https://www.linkedin.com/in/mayank-matkar-042003k?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       instagram: "https://www.instagram.com/mayank_matkar",
+        },
+        {
+      name: "Shrey Patidar",
+      role: "Treasurer",
+      image: shreyImg,
+      linkedin: "https://www.linkedin.com/in/shrey-patidar-b01000200/",
+      instagram: "https://www.instagram.com/shrey_patidar",
+      github: "https://github.com/shrey-patidar"
+    },
+    {
+      id: 6,
+      name: "Mitali Rampurkar",
+      role: "General Secretary",
+      image: mitaliImg,
+      linkedin: "https://www.linkedin.com/in/mitali-rampurkar-8b18b4303?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      instagram: "https://www.instagram.com/mitali.2708__",
       
     },
 /*{
