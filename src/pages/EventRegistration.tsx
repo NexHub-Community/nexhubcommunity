@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageBanner from '../components/PageBanner';
-import eventBanner from '../assets/EventPage/GamingDevelopment/banner.jpg';
+// Remove the generic banner import and use event-specific banners
+// const eventBanner = "https://placehold.co/1200x400/3563E9/FFFFFF?text=Event+Registration";
 import emailService from '../utils/emailService';
 
 interface Event {
@@ -12,6 +13,7 @@ interface Event {
   location: string;
   description?: string;
   time?: string;
+  banner?: string; // Add banner field
 }
 
 interface FormData {
@@ -49,7 +51,8 @@ const EventRegistration = () => {
         date: "April 15, 2025",
         time: "10:00 AM - 4:00 PM",
         location: "Online",
-        description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts."
+        description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts.",
+        banner: "/banners/ai-ml-bootcamp.jpg"
       },
       '2': {
         id: 2,
@@ -57,7 +60,8 @@ const EventRegistration = () => {
         date: "May 10, 2025",
         time: "11:00 AM - 5:00 PM",
         location: "NexHub HQ",
-        description: "Explore blockchain technology, smart contracts, and decentralized applications."
+        description: "Explore blockchain technology, smart contracts, and decentralized applications.",
+        banner: "/banners/web3-workshop.jpg"
       },
       // Add more events as needed
     };
@@ -84,10 +88,7 @@ const EventRegistration = () => {
     setFormError(null);
 
     try {
-      // In a real application, this would be done on the back-end
-      // Here we're showing what would happen server-side
-      
-      // Validate form data (could add more validation here)
+      // Validate form data
       if (!formData.name || !formData.email || !formData.phone || !formData.organization) {
         throw new Error('Please fill in all required fields');
       }
@@ -96,49 +97,53 @@ const EventRegistration = () => {
         throw new Error('Event information not available');
       }
 
-      // Send confirmation email with hall ticket
-      // In a real application, this would be an API call to your back-end:
-      /*
-      const response = await fetch('/api/event-registration', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          eventId: eventId,
-          ...formData
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Registration failed. Please try again later.');
-      }
-      */
-      
-      // For demonstration, simulate the back-end process and email sending
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // This is what would happen on your back-end:
-      /*
-      const emailSuccess = await emailService.sendEventRegistrationEmail({
+      console.log('Submitting form data:', {
         ...formData,
         eventId: event.id,
         eventName: event.name,
         eventDate: event.date,
         eventTime: event.time || 'Not specified',
-        eventLocation: event.location,
-        registrationDate: new Date()
+        eventLocation: event.location
       });
-      
-      if (!emailSuccess) {
-        // Still save the registration but log the email failure
-        console.error('Failed to send confirmation email');
+
+      // Send data to backend API
+      const response = await fetch('http://localhost:5000/api/send-registration-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          eventId: event.id,
+          eventName: event.name,
+          eventDate: event.date,
+          eventTime: event.time || 'Not specified',
+          eventLocation: event.location
+        }),
+      });
+
+      // Check if the response is ok before trying to parse JSON
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server error:', errorText);
+        throw new Error(`Registration failed: ${response.status} ${response.statusText}`);
       }
-      */
+
+      // Now try to parse JSON
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        console.error('JSON parsing error:', jsonError);
+        throw new Error('Could not process server response. Please try again.');
+      }
+
+      console.log('Registration successful:', result);
       
       // Success state
       setFormSubmitted(true);
     } catch (error) {
+      console.error('Form submission error:', error);
       if (error instanceof Error) {
         setFormError(error.message);
       } else {
@@ -218,7 +223,7 @@ const EventRegistration = () => {
       <PageBanner 
         title={`Register for ${event.name}`} 
         subtitle={`${event.date} | ${event.location}`}
-        backgroundImage={eventBanner}
+        backgroundImage={event.banner || `https://placehold.co/1200x400/3563E9/FFFFFF?text=Register+for+${encodeURIComponent(event.name)}`}
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
