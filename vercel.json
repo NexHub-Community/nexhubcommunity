@@ -2,8 +2,7 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" }
   ]
 } 
