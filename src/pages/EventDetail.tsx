@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageBanner from '../components/PageBanner';
-import eventBanner from '../assets/EventPage/GamingDevelopment/banner.jpg';
 
 interface Event {
   id: number;
@@ -17,6 +16,7 @@ interface Event {
   requirements?: string[];
   agenda?: { time: string; activity: string }[];
   image?: string;
+  banner?: string;
 }
 
 const EventDetail = () => {
@@ -37,6 +37,7 @@ const EventDetail = () => {
         description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts. Learn the basics of machine learning algorithms, data preparation, and model training.",
         organizer: "NexHub AI Team",
         capacity: "100 participants",
+        banner: "/banners/ai-ml-bootcamp.jpg",
         requirements: [
           "Basic programming knowledge",
           "Laptop with internet connection",
@@ -130,7 +131,7 @@ const EventDetail = () => {
       <PageBanner 
         title={event.name} 
         subtitle={`${event.date} | ${event.location}`}
-        backgroundImage={eventBanner}
+        backgroundImage={event.banner || "https://placehold.co/1200x400/3563E9/FFFFFF?text=" + encodeURIComponent(event.name)}
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">

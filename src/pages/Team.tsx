@@ -116,9 +116,9 @@ const Team = () => {
       name: "Shrey Patidar",
       role: "Treasurer",
       image: shreyImg,
-      linkedin: "https://www.linkedin.com/in/shrey-patidar-b01000200/",
-      instagram: "https://www.instagram.com/shrey_patidar",
-      github: "https://github.com/shrey-patidar"
+      linkedin: "https://www.linkedin.com/in/shrey-patidar-586272213?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      instagram: "https://www.instagram.com/patidar_ji_28?igsh=MTBvZXJ2eDhrNW5naA==",
+      github: "https://github.com/shreypatidar"
     },
     {
       id: 6,

@@ -13,35 +13,40 @@ const Events = () => {
       name: "AI/ML Bootcamp",
       date: "April 15, 2025",
       location: "Online",
-      description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts."
+      description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts.",
+      banner: "/banners/ai-ml-bootcamp.jpg"
     },
     {
       id: 2,
       name: "Web3 Workshop Series",
       date: "May 10, 2025",
       location: "NexHub HQ",
-      description: "Explore blockchain technology, smart contracts, and decentralized applications."
+      description: "Explore blockchain technology, smart contracts, and decentralized applications.",
+      banner: "/banners/web3-workshop.jpg"
     },
     {
       id: 3,
       name: "DevOps Fundamentals",
       date: "June 5, 2025",
       location: "Online",
-      description: "Learn about CI/CD pipelines, Docker, Kubernetes and modern DevOps practices."
+      description: "Learn about CI/CD pipelines, Docker, Kubernetes and modern DevOps practices.",
+      banner: "/banners/devops-fundamentals.jpg"
     },
     {
       id: 4,
       name: "Mobile App Development Workshop",
       date: "July 12, 2025",
       location: "NexHub HQ",
-      description: "Hands-on session on building cross-platform mobile applications with React Native."
+      description: "Hands-on session on building cross-platform mobile applications with React Native.",
+      banner: "/banners/mobile-app-dev.jpg"
     },
     {
       id: 5,
       name: "Tech Career Fair",
       date: "August 20, 2025",
       location: "City Convention Center",
-      description: "Connect with top tech companies hiring for various roles in development, design, and product."
+      description: "Connect with top tech companies hiring for various roles in development, design, and product.",
+      banner: "/banners/career-fair.jpg"
     }
   ];
 
@@ -52,6 +57,7 @@ const Events = () => {
       date: "January 10, 2024",
       location: "NexHub HQ",
       image: "/event-hackathon.jpg",
+      banner: "/banners/hackwave.jpg",
       summary: "A 36-hour hackathon where teams built innovative solutions for community challenges."
     },
     {
