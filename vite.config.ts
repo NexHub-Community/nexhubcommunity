@@ -8,5 +8,5 @@ export default defineConfig({
     port: 3000
   },
   // Add base path for GitHub Pages - replace "nexhub" with your repository name
-  base: '/nexhubcommunity'
+  base: '/'
 }); 
