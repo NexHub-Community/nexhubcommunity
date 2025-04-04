@@ -111,25 +111,7 @@ const Team = () => {
       linkedin: "https://www.linkedin.com/in/shrey-patidar-586272213?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       instagram: "https://www.instagram.com/patidar_ji_28?igsh=MTBvZXJ2eDhrNW5naA==",
       github: "https://github.com/shreypatidar"
-    },
-    /*{
-      id: 2,
-      name: "Vaidic Tiwari",
-      role: "Advisor",
-      image: vaidicImg,
-      linkedin: "https://www.linkedin.com/in/vaidic-tiwari-b01000200/",
-      instagram: "https://www.instagram.com/vaidic_tiwari",
-      github: "https://github.com/vaidic-tiwari"
-    },
-    {
-      id: 3,
-      name: "Naman Sisodiya",
-      role: "Advisor",
-      image: namanImg,
-      linkedin: "https://www.linkedin.com/in/naman-sisodiya-b01000200/",
-      instagram: "https://www.instagram.com/naman_sisodiya",
-      github: "https://github.com/naman-sisodiya"
-    },  */     
+    },    
     {
       id: 6,
       name: "Arnav Bhokre",
@@ -137,7 +119,7 @@ const Team = () => {
       image: arnavImg,
       linkedin: "https://www.linkedin.com/in/arnav-bhokre-a09482250",
       instagram: "https://www.instagram.com/arnav_bhokre2813?igsh=MWl3bmw2bjd6MTlkNQ==",
-},    
+    },
 {
       id: 5,
       name: "Mayank Matkar",
@@ -163,6 +145,24 @@ id: 7,
       instagram: "https://www.instagram.com/adityaa_choudhary1017?igsh=MWRpaWVrc3VkZWVyZw==",
       
     },*/
+        /*{
+      id: 2,
+      name: "Vaidic Tiwari",
+      role: "Advisor",
+      image: vaidicImg,
+      linkedin: "https://www.linkedin.com/in/vaidic-tiwari-b01000200/",
+      instagram: "https://www.instagram.com/vaidic_tiwari",
+      github: "https://github.com/vaidic-tiwari"
+    },
+    {
+      id: 3,
+      name: "Naman Sisodiya",
+      role: "Advisor",
+      image: namanImg,
+      linkedin: "https://www.linkedin.com/in/naman-sisodiya-b01000200/",
+      instagram: "https://www.instagram.com/naman_sisodiya",
+      github: "https://github.com/naman-sisodiya"
+    },  */ 
 
   ];
 
