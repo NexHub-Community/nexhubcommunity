@@ -114,68 +114,87 @@ app.post('/api/send-registration-email', async (req, res) => {
       registrationDate: new Date().toISOString()
     };
     
-    const spreadsheetSaved = await saveToSpreadsheet(registrationData);
-    if (!spreadsheetSaved) {
-      console.warn('Failed to save to spreadsheet, but will continue with email sending');
+    try {
+      // Try to save to spreadsheet but don't fail the whole request if it doesn't work
+      const spreadsheetSaved = await saveToSpreadsheet(registrationData);
+      if (!spreadsheetSaved) {
+        console.warn('Failed to save to spreadsheet, but will continue with email sending');
+      }
+    } catch (sheetError) {
+      console.error('Error in spreadsheet save (continuing):', sheetError);
     }
     
-    // Configure transporter
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: 'noreply.nexhub@gmail.com',
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
+    try {
+      // Configure transporter
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.SMTP_EMAIL || 'noreply.nexhub@gmail.com',
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
 
-    // Email content
-    const mailOptions = {
-      from: '"NexHub Community" <noreply.nexhub@gmail.com>',
-      to: email,
-      subject: `Registration Confirmation for ${eventName}`,
-      html: `
-        <div style="font-family: Arial; max-width: 600px; margin: 0 auto;">
-          <h1>Registration Confirmation</h1>
-          <p>Hello ${name},</p>
-          <p>Thank you for registering for <strong>${eventName}</strong>. Your registration has been confirmed.</p>
-          <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-            <p><strong>Event:</strong> ${eventName}</p>
-            <p><strong>Date:</strong> ${eventDate}</p>
-            <p><strong>Time:</strong> ${eventTime}</p>
-            <p><strong>Location:</strong> ${eventLocation}</p>
-            <p><strong>Registration ID:</strong> ${registrationId}</p>
+      // Email content
+      const mailOptions = {
+        from: `"NexHub Community" <${process.env.SMTP_EMAIL || 'noreply.nexhub@gmail.com'}>`,
+        to: email,
+        subject: `Registration Confirmation for ${eventName}`,
+        html: `
+          <div style="font-family: Arial; max-width: 600px; margin: 0 auto;">
+            <h1>Registration Confirmation</h1>
+            <p>Hello ${name},</p>
+            <p>Thank you for registering for <strong>${eventName}</strong>. Your registration has been confirmed.</p>
+            <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+              <p><strong>Event:</strong> ${eventName}</p>
+              <p><strong>Date:</strong> ${eventDate}</p>
+              <p><strong>Time:</strong> ${eventTime}</p>
+              <p><strong>Location:</strong> ${eventLocation}</p>
+              <p><strong>Registration ID:</strong> ${registrationId}</p>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+              <p><strong>Your QR Code Hall Ticket</strong></p>
+              <p>Please present this QR code at the event entrance</p>
+              <img src="${qrCodeDataURL}" alt="QR Code" style="width: 200px; height: 200px;"/>
+            </div>
+            
+            <p>We're looking forward to seeing you at the event!</p>
+            <p>Best regards,<br>NexHub Community Team</p>
           </div>
-          
-          <div style="text-align: center; margin: 20px 0;">
-            <p><strong>Your QR Code Hall Ticket</strong></p>
-            <p>Please present this QR code at the event entrance</p>
-            <img src="${qrCodeDataURL}" alt="QR Code" style="width: 200px; height: 200px;"/>
-          </div>
-          
-          <p>We're looking forward to seeing you at the event!</p>
-          <p>Best regards,<br>NexHub Community Team</p>
-        </div>
-      `,
-    };
+        `,
+      };
 
-    console.log('Attempting to send email to:', email);
-    
-    // Send email
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.messageId);
-
-    res.status(200).json({ 
-      success: true, 
-      message: 'Registration confirmation email sent successfully',
-      registrationId: registrationId
-    });
+      console.log('Attempting to send email to:', email);
+      
+      // Send email
+      const info = await transporter.sendMail(mailOptions);
+      console.log('Email sent:', info.messageId);
+      
+      // Success response
+      res.status(200).json({ 
+        success: true, 
+        message: 'Registration confirmation email sent successfully',
+        registrationId: registrationId
+      });
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      
+      // If email fails but we have the registration data, still return success
+      // but with a flag indicating email failed
+      res.status(200).json({ 
+        success: true, 
+        emailSent: false,
+        message: 'Registration completed but email delivery failed. Please contact support.',
+        registrationId: registrationId
+      });
+    }
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error in registration process:', error);
     res.status(500).json({ 
       success: false, 
-      message: 'Failed to send email', 
+      message: 'Registration failed. Please try again or contact support.', 
       error: error.message 
     });
   }
