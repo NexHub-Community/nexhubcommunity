@@ -3,10 +3,10 @@ import React from 'react';
 
 // Import team member images
 import shivamImg from '../assets/MembersImages/shivam.jpg'; 
-import namanImg from '../assets/MembersImages/naman.jpg';
-import vaidicImg from '../assets/MembersImages/vaidic.jpg';
-import adityaImg from '../assets/MembersImages/adityaa.jpeg';
-import shivaniImg from '../assets/MembersImages/shivani.jpg';
+//import namanImg from '../assets/MembersImages/naman.jpg';
+//import vaidicImg from '../assets/MembersImages/vaidic.jpg';
+import utkarshImg from '../assets/MembersImages/utkarsh.jpeg';
+import mayankImg from '../assets/MembersImages/mayank.jpg';
 import arnavImg from '../assets/MembersImages/arnav.jpg';
 import shreyImg from '../assets/MembersImages/shrey.jpg';
 import mitaliImg from '../assets/MembersImages/mitali.jpg';
@@ -87,6 +87,33 @@ const Team = () => {
     },
     {
       id: 2,
+      name: "Mitali Rampurkar",
+      role: "General Secretary",
+      image: mitaliImg,
+      linkedin: "https://www.linkedin.com/in/mitali-rampurkar-8b18b4303?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      instagram: "https://www.instagram.com/mitali.2708__",
+      
+    },
+    {
+      id: 3,
+      name: "Utkarsh Dave",
+      role: "Head of Media and Content",
+      image: utkarshImg,
+      linkedin: "https://www.linkedin.com/in/utkarsh-dave-8770b7226?trk=contact-info",
+      instagram: "https://www.instagram.com/ud_hsraktu?igsh=ejl3ZnJybjQ0b3Fs&utm_source=qr",
+      
+    },
+    {
+      id: 4,
+      name: "Shrey Patidar",
+      role: "Head of Research and Analysis",
+      image: shreyImg,
+      linkedin: "https://www.linkedin.com/in/shrey-patidar-586272213?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      instagram: "https://www.instagram.com/patidar_ji_28?igsh=MTBvZXJ2eDhrNW5naA==",
+      github: "https://github.com/shreypatidar"
+    },
+    /*{
+      id: 2,
       name: "Vaidic Tiwari",
       role: "Advisor",
       image: vaidicImg,
@@ -102,33 +129,41 @@ const Team = () => {
       linkedin: "https://www.linkedin.com/in/naman-sisodiya-b01000200/",
       instagram: "https://www.instagram.com/naman_sisodiya",
       github: "https://github.com/naman-sisodiya"
-    },       
+    },  */     
     {
-      id: 4,
+      id: 6,
       name: "Arnav Bhokre",
-      role: "Event coordinator",
+      role: "Head of Event and Operations",
       image: arnavImg,
       linkedin: "https://www.linkedin.com/in/arnav-bhokre-a09482250",
       instagram: "https://www.instagram.com/arnav_bhokre2813?igsh=MWl3bmw2bjd6MTlkNQ==",
-    },
-    {
+},    
+{
       id: 5,
-      name: "Shrey Patidar",
-      role: "Treasurer",
-      image: shreyImg,
-      linkedin: "https://www.linkedin.com/in/shrey-patidar-b01000200/",
-      instagram: "https://www.instagram.com/shrey_patidar",
-      github: "https://github.com/shrey-patidar"
-    },
-    {
-      id: 6,
-      name: "Mitali Rampurkar",
-      role: "General Secretary",
-      image: mitaliImg,
-      linkedin: "https://www.linkedin.com/in/mitali-rampurkar-8b18b4303?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-      instagram: "https://www.instagram.com/mitali.2708__",
+      name: "Mayank Matkar",
+      role: "Head of Technical Development",
+      image: mayankImg,
+      linkedin: "https://www.linkedin.com/in/mayank-matkar-042003k?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      instagram: "https://www.instagram.com/mayank_matkar",
+        },
+/*{
+id: 7,
+      name: "Tarang upadhyay",
+      role: "",
+      image: tarangImg,
+      linkedin: "https://www.linkedin.com/in/%F0%9D%9A%83%F0%9D%9A%8A%F0%9D%9A%9B%F0%9D%9A%8A%F0%9D%9A%97%F0%9D%9A%90-%F0%9D%9A%9E%F0%9D%9A%99%F0%9D%9A%8A%F0%9D%9A%8D%F0%9D%9A%91%F0%9D%9A%A2%F0%9D%9A%8A%F0%9D%9A%A2-62b182233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      instagram: "https://www.instagram.com/_.tarang_upadhyay._?igsh=MWUyOHlwaTFsc2l3OA==",
+      },
+{
+      id: 8,
+      name: "Aditya choudhary",
+      role: "promotion Head",
+      image: adityaimg,
+      linkedin: "https://www.linkedin.com/in/aditya-choudhary-bab134330?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      instagram: "https://www.instagram.com/adityaa_choudhary1017?igsh=MWRpaWVrc3VkZWVyZw==",
       
-    },
+    },*/
+
   ];
 
   return (
