@@ -106,7 +106,7 @@ const EventRegistration = () => {
         eventLocation: event.location
       });
 
-      // Send data to backend API   /api/send-registration-email
+      // Send data to backend API
       const response = await fetch('/api/send-registration-email', {
         method: 'POST',
         headers: {
@@ -139,9 +139,16 @@ const EventRegistration = () => {
       }
 
       console.log('Registration successful:', result);
-      
-      // Success state
-      setFormSubmitted(true);
+
+      // For successful registration but failed email
+      if (result.success && result.emailSent === false) {
+        setFormSubmitted(true);
+        setFormError("Registration completed, but we couldn't send a confirmation email. Please take a screenshot of this page as your confirmation.");
+      } else {
+        // Success state for everything working correctly
+        setFormSubmitted(true);
+        setFormError(null);
+      }
     } catch (error) {
       console.error('Form submission error:', error);
       if (error instanceof Error) {
@@ -192,10 +199,10 @@ const EventRegistration = () => {
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Registration Successful!</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Thank you for registering for {event.name}. A confirmation email with your hall ticket has been sent to {formData.email}.
+              {formError || 'Thank you for registering for ' + event.name + '. A confirmation email with your hall ticket has been sent to ' + formData.email + '.'}
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-8">
-              Please check your inbox (and spam folder) for the email and bring your hall ticket to the event.
+              {formError ? 'Please try again later.' : 'Please check your inbox (and spam folder) for the email and bring your hall ticket to the event.'}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link 
