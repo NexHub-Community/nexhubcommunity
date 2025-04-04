@@ -106,8 +106,8 @@ const EventRegistration = () => {
         eventLocation: event.location
       });
 
-      // Send data to backend API
-      const response = await fetch('http://localhost:5000/api/send-registration-email', {
+      // Send data to backend API   /api/send-registration-email
+      const response = await fetch('/api/send-registration-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
