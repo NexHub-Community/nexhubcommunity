@@ -41,7 +41,7 @@ export const sendEventRegistrationEmail = async (data: EmailData): Promise<boole
       secure: false, // true for 465, false for other ports
       auth: {
         user: 'noreply.nexhub@gmail.com',
-        pass: process.env.SMTP_PASSWORD, // Use an app password rather than account password
+        pass: 'cmvk pqcl nnso ujvw', // Use an app password rather than account password
       },
     });
 
