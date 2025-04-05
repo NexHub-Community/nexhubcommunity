@@ -13,12 +13,40 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Middleware
+// CORS configuration
 app.use(cors({
   origin: '*',
-  credentials: true
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Add OPTIONS handler for preflight requests
+app.options('*', cors());
+
+// Add middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Add detailed request logging for debugging API endpoints
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  console.log('Headers:', JSON.stringify(req.headers));
+  
+  if (req.method === 'POST') {
+    console.log('Request body:', JSON.stringify(req.body));
+  }
+  
+  // Add response logging
+  const originalSend = res.send;
+  res.send = function(body) {
+    console.log(`[${new Date().toISOString()}] Response ${res.statusCode}:`, 
+      body.length > 1000 ? body.substring(0, 1000) + '... (truncated)' : body);
+    return originalSend.call(this, body);
+  };
+  
+  next();
+});
 
 // Serve static files from the build folder
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -28,6 +56,11 @@ async function saveToSpreadsheet(registrationData) {
   try {
     console.log('Sending data to Google Apps Script:', JSON.stringify(registrationData));
     console.log('Using URL:', process.env.GOOGLE_SCRIPT_URL);
+    
+    if (!process.env.GOOGLE_SCRIPT_URL) {
+      console.error('GOOGLE_SCRIPT_URL is not defined in environment variables');
+      return false;
+    }
     
     // Convert JSON to form-urlencoded which works better with Google Apps Script
     const params = new URLSearchParams();
@@ -57,6 +90,10 @@ async function saveToSpreadsheet(registrationData) {
     } else if (error.request) {
       // The request was made but no response was received
       console.error('No response received from Google Apps Script');
+      console.error('Request details:', error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error setting up request:', error.message);
     }
     return false;
   }
@@ -134,6 +171,9 @@ app.post('/api/send-registration-email', async (req, res) => {
           user: process.env.SMTP_EMAIL || 'noreply.nexhub@gmail.com',
           pass: process.env.SMTP_PASSWORD,
         },
+        tls: {
+          rejectUnauthorized: false // Helps with some Vercel deployment issues
+        }
       });
 
       // Email content
@@ -200,8 +240,180 @@ app.post('/api/send-registration-email', async (req, res) => {
   }
 });
 
+// API endpoint for recruitment form submissions
+app.post('/api/submit-recruitment', async (req, res) => {
+  try {
+    console.log('Recruitment form submission received:', req.body);
+    const { fullName, email, phone, portfolioLink, role, experience, message } = req.body;
+    
+    // Validate required fields
+    if (!fullName || !email || !role || !experience || !message) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Missing required fields' 
+      });
+    }
+    
+    // Create application ID
+    const applicationId = `NX-TEAM-${Date.now().toString().slice(-6)}`;
+    
+    // Prepare data for spreadsheet
+    const applicationData = {
+      applicationId,
+      fullName,
+      email,
+      phone: phone || 'Not provided',
+      portfolioLink: portfolioLink || 'Not provided',
+      role,
+      experience,
+      message,
+      applicationDate: new Date().toISOString(),
+      status: 'Pending Review'
+    };
+    
+    try {
+      // Save to the same spreadsheet but different sheet/tab
+      const spreadsheetSaved = await saveToSpreadsheet({
+        ...applicationData,
+        dataType: 'recruitment' // Add a flag to identify recruitment data in the Google Apps Script
+      });
+      
+      if (!spreadsheetSaved) {
+        console.warn('Failed to save recruitment data to spreadsheet');
+        return res.status(500).json({ 
+          success: false, 
+          message: 'Failed to save your application. Please try again later.' 
+        });
+      }
+      
+      // Optionally send a confirmation email to the applicant
+      try {
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false,
+          auth: {
+            user: process.env.SMTP_EMAIL || 'noreply.nexhub@gmail.com',
+            pass: process.env.SMTP_PASSWORD,
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+        
+        await transporter.sendMail({
+          from: `"NexHub Community" <${process.env.SMTP_EMAIL || 'noreply.nexhub@gmail.com'}>`,
+          to: email,
+          subject: `NexHub Team Application Received`,
+          html: `
+            <div style="font-family: Arial; max-width: 600px; margin: 0 auto;">
+              <h1>Application Received</h1>
+              <p>Hello ${fullName},</p>
+              <p>Thank you for your interest in joining the NexHub team! We've received your application for the <strong>${role}</strong> role.</p>
+              <p>Your application ID is: <strong>${applicationId}</strong></p>
+              <p>Our team will review your application and get back to you soon if your qualifications match our requirements.</p>
+              <p>Best regards,<br>NexHub Community Team</p>
+            </div>
+          `,
+        });
+        
+        console.log('Confirmation email sent to applicant:', email);
+      } catch (emailError) {
+        console.error('Error sending application confirmation email:', emailError);
+        // Continue even if email fails
+      }
+      
+      // Success response
+      res.status(200).json({ 
+        success: true, 
+        message: 'Application submitted successfully!',
+        applicationId
+      });
+      
+    } catch (error) {
+      console.error('Error saving recruitment data:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'There was an error processing your application. Please try again later.' 
+      });
+    }
+  } catch (error) {
+    console.error('Error in recruitment submission process:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Application submission failed. Please try again or contact support.', 
+      error: error.message 
+    });
+  }
+});
+
+// Ensure environment variables are correctly loaded for Vercel
+app.post('/api/verify-email-config', (req, res) => {
+  try {
+    // Return email configuration status (without exposing credentials)
+    res.status(200).json({ 
+      configured: !!process.env.SMTP_PASSWORD, 
+      email: process.env.SMTP_EMAIL || 'noreply.nexhub@gmail.com'
+    });
+  } catch (error) {
+    console.error('Email configuration check error:', error);
+    res.status(500).json({ success: false, message: 'Failed to check email configuration.' });
+  }
+});
+
+// Debug endpoint to check API connectivity
+app.get('/api/debug', (req, res) => {
+  try {
+    const debugInfo = {
+      status: 'success',
+      message: 'API server is running',
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development',
+      config: {
+        port: process.env.PORT || 5000,
+        emailConfigured: !!process.env.EMAIL_USER && !!process.env.EMAIL_PASS,
+        googleScriptConfigured: !!process.env.GOOGLE_SCRIPT_URL
+      },
+      headers: {
+        host: req.headers.host,
+        origin: req.headers.origin,
+        referer: req.headers.referer
+      }
+    };
+    
+    res.json(debugInfo);
+  } catch (error) {
+    console.error('Debug endpoint error:', error);
+    res.status(500).json({ 
+      status: 'error', 
+      message: 'Failed to retrieve debug information',
+      error: error.message
+    });
+  }
+});
+
+// Test endpoint for recruitment submissions
+app.get('/api/test-recruitment', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Recruitment API test successful',
+    testApplicationId: 'TEST-' + Date.now(),
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Test endpoint for event registrations
+app.get('/api/test-registration', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Registration API test successful',
+    testRegistrationId: 'TEST-' + Date.now(),
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Handle all other routes for SPA routing
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 

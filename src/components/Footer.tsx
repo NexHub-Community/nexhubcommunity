@@ -94,10 +94,28 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
-          <p className="text-center text-sm text-gray-600 dark:text-gray-300">
-            &copy; {new Date().getFullYear()} NexHub Community. All rights reserved.
-          </p>
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              © {new Date().getFullYear()} NexHub Community. All rights reserved.
+            </p>
+            <div className="mt-4 md:mt-0 flex items-center space-x-4">
+              <a 
+                href="https://github.com/NexHub-Community" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary-light"
+              >
+                GitHub
+              </a>
+              <Link 
+                to="/api-debug" 
+                className="text-xs text-gray-400 hover:text-primary dark:text-gray-500 dark:hover:text-primary-light"
+              >
+                API Status
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
