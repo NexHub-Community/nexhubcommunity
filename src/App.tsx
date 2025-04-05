@@ -16,6 +16,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 const Join = lazy(() => import('./pages/Join'));
 const EventDetail = lazy(() => import('./pages/EventDetail'));
 const EventRegistration = lazy(() => import('./pages/EventRegistration'));
+const ApiDebug = lazy(() => import('./pages/ApiDebug'));
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/team" element={<Team />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/join" element={<Join />} />
+            <Route path="/api-debug" element={<ApiDebug />} />
           </Routes>
         </Suspense>
       </main>

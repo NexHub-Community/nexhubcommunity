@@ -5,6 +5,7 @@ import PageBanner from '../components/PageBanner';
 // Remove the generic banner import and use event-specific banners
 // const eventBanner = "https://placehold.co/1200x400/3563E9/FFFFFF?text=Event+Registration";
 import emailService from '../utils/emailService';
+import { submitEventRegistration } from '../utils/api';
 
 interface Event {
   id: number;
@@ -106,37 +107,15 @@ const EventRegistration = () => {
         eventLocation: event.location
       });
 
-      // Send data to backend API
-      const response = await fetch('/api/send-registration-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          eventId: event.id,
-          eventName: event.name,
-          eventDate: event.date,
-          eventTime: event.time || 'Not specified',
-          eventLocation: event.location
-        }),
+      // Use the API utility to send registration data
+      const result = await submitEventRegistration({
+        ...formData,
+        eventId: event.id,
+        eventName: event.name,
+        eventDate: event.date,
+        eventTime: event.time || 'Not specified',
+        eventLocation: event.location
       });
-
-      // Check if the response is ok before trying to parse JSON
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server error:', errorText);
-        throw new Error(`Registration failed: ${response.status} ${response.statusText}`);
-      }
-
-      // Now try to parse JSON
-      let result;
-      try {
-        result = await response.json();
-      } catch (jsonError) {
-        console.error('JSON parsing error:', jsonError);
-        throw new Error('Could not process server response. Please try again.');
-      }
 
       console.log('Registration successful:', result);
 

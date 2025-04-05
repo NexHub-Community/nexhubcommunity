@@ -52,7 +52,8 @@ const Events = () => {
       date: "January 10, 2024",
       location: "NexHub HQ",
       image: "/event-hackathon.jpg",
-      summary: "A 36-hour hackathon where teams built innovative solutions for community challenges."
+      summary: "A 36-hour hackathon where teams built innovative solutions for community challenges.",
+      youtubeTrailer: "https://www.youtube.com/channel/UCUHmRuQ9ELLTC9lVeTtEQpw"
     },
     {
       id: 102,
@@ -60,7 +61,8 @@ const Events = () => {
       date: "February 15, 2024",
       location: "Online",
       image: "/event-frontend.jpg",
-      summary: "An intensive workshop covering modern frontend frameworks and best practices."
+      summary: "An intensive workshop covering modern frontend frameworks and best practices.",
+      youtubeTrailer: "https://www.youtube.com/channel/UCUHmRuQ9ELLTC9lVeTtEQpw"
     },
     {
       id: 103,
@@ -68,7 +70,8 @@ const Events = () => {
       date: "March 22, 2024",
       location: "Tech University",
       image: "/event-datascience.jpg",
-      summary: "A day-long conference featuring talks from leading data scientists and researchers."
+      summary: "A day-long conference featuring talks from leading data scientists and researchers.",
+      youtubeTrailer: "https://www.youtube.com/channel/UCUHmRuQ9ELLTC9lVeTtEQpw"
     },
     {
       id: 104,
@@ -76,7 +79,8 @@ const Events = () => {
       date: "April 8, 2024",
       location: "Online",
       image: "/event-cloud.jpg",
-      summary: "Practical sessions on AWS, Azure, and Google Cloud Platform fundamentals."
+      summary: "Practical sessions on AWS, Azure, and Google Cloud Platform fundamentals.",
+      youtubeTrailer: "https://www.youtube.com/channel/UCUHmRuQ9ELLTC9lVeTtEQpw"
     },
     {
       id: 105,
@@ -84,15 +88,8 @@ const Events = () => {
       date: "May 15, 2024",
       location: "Community Center",
       image: "/event-womenintech.jpg",
-      summary: "Inspiring discussions with women leaders in various technology fields."
-    },
-    {
-      id: 106,
-      name: "Cybersecurity Bootcamp",
-      date: "June 20, 2024",
-      location: "NexHub HQ",
-      image: "/event-cybersecurity.jpg",
-      summary: "Intensive training on modern security threats and protection strategies."
+      summary: "Inspiring discussions with women leaders in various technology fields.",
+      youtubeTrailer: "https://www.youtube.com/channel/UCUHmRuQ9ELLTC9lVeTtEQpw"
     }
   ];
 
@@ -193,15 +190,28 @@ const Events = () => {
                     className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md transition-all hover:shadow-lg"
                   >
                     <div className="h-48 bg-gray-300 dark:bg-gray-700 relative">
-                      <img 
-                        src={event.image} 
-                        alt={event.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = `https://placehold.co/600x400/3563E9/FFFFFF?text=${event.name.replace(/ /g, '+')}`;
-                        }}
-                      />
+                      {event.youtubeTrailer ? (
+                        <div className="w-full h-full">
+                          <iframe 
+                            src={event.youtubeTrailer}
+                            title={`${event.name} Trailer`}
+                            className="w-full h-full"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      ) : (
+                        <img 
+                          src={event.image} 
+                          alt={event.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = `https://placehold.co/600x400/3563E9/FFFFFF?text=${event.name.replace(/ /g, '+')}`;
+                          }}
+                        />
+                      )}
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                         <span className="text-white text-sm font-medium">{event.date}</span>
                       </div>
