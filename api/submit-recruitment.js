@@ -40,7 +40,8 @@ export default async function handler(req, res) {
       experience,
       message,
       applicationDate: new Date().toISOString(),
-      status: 'Pending Review'
+      status: 'Pending Review',
+      dataType: 'recruitment'
     };
     
     try {
