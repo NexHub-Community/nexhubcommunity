@@ -33,7 +33,7 @@ function doPost(e) {
     const data = JSON.parse(e.parameter.data);
     console.log('Received data:', data);
     
-    // Determine the sheet to save to based on dataType flag
+    // Determine the sheet to save to ebased on dataType flag
     if (data.dataType === 'recruitment') {
       saveTeamApplication(data);
     } else {

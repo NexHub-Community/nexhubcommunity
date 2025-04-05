@@ -99,22 +99,6 @@ const Footer = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400">
               © {new Date().getFullYear()} NexHub Community. All rights reserved.
             </p>
-            <div className="mt-4 md:mt-0 flex items-center space-x-4">
-              <a 
-                href="https://github.com/NexHub-Community" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary-light"
-              >
-                GitHub
-              </a>
-              <Link 
-                to="/api-debug" 
-                className="text-xs text-gray-400 hover:text-primary dark:text-gray-500 dark:hover:text-primary-light"
-              >
-                API Status
-              </Link>
-            </div>
           </div>
         </div>
       </div>

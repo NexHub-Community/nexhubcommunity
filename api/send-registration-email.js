@@ -51,7 +51,8 @@ export default async function handler(req, res) {
       eventTime,
       eventLocation,
       additionalInfo,
-      registrationDate: new Date().toISOString()
+      registrationDate: new Date().toISOString(),
+      dataType: 'registration'
     };
     
     try {
