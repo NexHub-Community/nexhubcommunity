@@ -448,10 +448,10 @@ const Join = () => {
                       onChange={handleChange}
                     >
                       <option value="">Select experience level</option>
-                      <option value="beginner">Beginner (0-1 years)</option>
-                      <option value="intermediate">Intermediate (1-3 years)</option>
-                      <option value="experienced">Experienced (3-5 years)</option>
-                      <option value="advanced">Advanced (5+ years)</option>
+                      <option value="beginner">Beginner</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="experienced">Experienced</option>
+                      <option value="advanced">Advanced</option>
                     </select>
                   </div>
                 </div>

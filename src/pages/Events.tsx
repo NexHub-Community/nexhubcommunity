@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
@@ -10,12 +10,13 @@ const Events = () => {
   const upcomingEvents = [
     {
       id: 1,
-      name: "AI/ML Bootcamp",
-      date: "April 15, 2025",
-      location: "Online",
-      description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts."
+      name: "Game Alchemy 2.0 ( SVVV )",
+      date: "April 26, 2025",
+      location: "SVVV Auditorium",
+      description: "join us for Game Alchemy, an immersive seminar on game development featuring expert talks, hands-on workshops, and networking opportunities.",
+      organizer: "NexHub Team",
     },
-    {
+    /*{
       id: 2,
       name: "Web3 Workshop Series",
       date: "May 10, 2025",
@@ -42,20 +43,20 @@ const Events = () => {
       date: "August 20, 2025",
       location: "City Convention Center",
       description: "Connect with top tech companies hiring for various roles in development, design, and product."
-    }
+    }*/
   ];
 
   const previousEvents = [
     {
       id: 101,
-      name: "HackWave 2024",
-      date: "January 10, 2024",
+      name: "Game Alchemy",
+      date: "December 07, 2024",
       location: "NexHub HQ",
-      image: "/event-hackathon.jpg",
-      summary: "A 36-hour hackathon where teams built innovative solutions for community challenges.",
-      youtubeTrailer: "https://www.youtube.com/channel/UCUHmRuQ9ELLTC9lVeTtEQpw"
+      image: "/src/assets/OtherImages/GameAlchemyPoster2816.png",
+      summary: "The Game Alchemy event on December 7, 2024, was a workshop by NexHub Community and The UpThrust, focusing on game design and development through expert talks and hands-on experiences.",
+      youtubeTrailer: "https://youtube.com/shorts/8a5w-PO-f9I?si=V4ZK20ZB-mWB7IEH"
     },
-    {
+    /*{
       id: 102,
       name: "Frontend Development Masterclass",
       date: "February 15, 2024",
@@ -90,7 +91,7 @@ const Events = () => {
       image: "/event-womenintech.jpg",
       summary: "Inspiring discussions with women leaders in various technology fields.",
       youtubeTrailer: "https://www.youtube.com/channel/UCUHmRuQ9ELLTC9lVeTtEQpw"
-    }
+    }*/
   ];
 
   return (
@@ -190,28 +191,15 @@ const Events = () => {
                     className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md transition-all hover:shadow-lg"
                   >
                     <div className="h-48 bg-gray-300 dark:bg-gray-700 relative">
-                      {event.youtubeTrailer ? (
-                        <div className="w-full h-full">
-                          <iframe 
-                            src={event.youtubeTrailer}
-                            title={`${event.name} Trailer`}
-                            className="w-full h-full"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </div>
-                      ) : (
-                        <img 
-                          src={event.image} 
-                          alt={event.name}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = `https://placehold.co/600x400/3563E9/FFFFFF?text=${event.name.replace(/ /g, '+')}`;
-                          }}
-                        />
-                      )}
+                      <img 
+                        src={event.image} 
+                        alt={event.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = `https://placehold.co/600x400/3563E9/FFFFFF?text=${event.name.replace(/ /g, '+')}`;
+                        }}
+                      />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                         <span className="text-white text-sm font-medium">{event.date}</span>
                       </div>

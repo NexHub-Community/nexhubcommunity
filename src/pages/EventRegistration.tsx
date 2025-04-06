@@ -48,14 +48,14 @@ const EventRegistration = () => {
     const mockEvents: Record<string, Event> = {
       '1': {
         id: 1,
-        name: "AI/ML Bootcamp",
-        date: "April 15, 2025",
-        time: "10:00 AM - 4:00 PM",
-        location: "Online",
-        description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts.",
-        banner: "/banners/ai-ml-bootcamp.jpg"
+        name: "Game Alchemy 2.0 ( SVVV )",
+        date: "April 26, 2025",
+        time: "11:00 AM - 4:00 PM",
+        location: "SVVV Auditorium",
+        description: "A hands-on workshop on game development fundamentals, featuring industry experts.",
+        banner: "/src/assets/OtherImages/GameAlchemyPoster2816.png"
       },
-      '2': {
+      /*'2': {
         id: 2,
         name: "Web3 Workshop Series",
         date: "May 10, 2025",
@@ -63,7 +63,7 @@ const EventRegistration = () => {
         location: "NexHub HQ",
         description: "Explore blockchain technology, smart contracts, and decentralized applications.",
         banner: "/banners/web3-workshop.jpg"
-      },
+      },*/
       // Add more events as needed
     };
 

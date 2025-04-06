@@ -13,10 +13,16 @@ interface Event {
   summary?: string;
   time?: string;
   organizer?: string;
+  collaboration?: string;
+  audience?: string;
+  objective?: string;
+  highlights?: { title: string; points: string[] }[];
+  takeaways?: string[];
   capacity?: string;
   requirements?: string[];
   agenda?: { time: string; activity: string }[];
   image?: string;
+  youtubeTrailer?: string;
 }
 
 const EventDetail = () => {
@@ -30,27 +36,27 @@ const EventDetail = () => {
     const mockEvents: Record<string, Event> = {
       '1': {
         id: 1,
-        name: "AI/ML Bootcamp",
-        date: "April 15, 2025",
-        time: "10:00 AM - 4:00 PM",
-        location: "Online",
-        description: "A hands-on workshop on AI and ML fundamentals, featuring industry experts. Learn the basics of machine learning algorithms, data preparation, and model training.",
-        organizer: "NexHub AI Team",
-        capacity: "100 participants",
-        requirements: [
-          "Basic programming knowledge",
-          "Laptop with internet connection",
-          "Python installed (preferably with Anaconda)"
-        ],
+        name: "Game Alchemy 2.0 ( SVVV )",
+        date: "April 26, 2025",
+        time: "11:00 AM - 4:00 PM",
+        location: "SVVV Auditorium",
+        description: "Join us for Game Alchemy 2.0, an immersive seminar dedicated to the art and science of game development. Whether you're a budding game designer, an aspiring programmer, or a seasoned developer looking to refine your skills, this seminar offers a unique opportunity to explore the multifaceted world of game creation.",
+        organizer: "NexHub Team",
+        capacity: "120 participants",
+        //requirements: [
+        //  "Basic programming knowledge",
+        //  "Laptop with internet connection",
+        //  "Python installed (preferably with Anaconda)"
+        //],
         agenda: [
-          { time: "10:00 AM", activity: "Introduction to ML concepts" },
+          { time: "10:00 AM", activity: "Introduction to Game Development concepts" },
           { time: "11:30 AM", activity: "Data preparation workshop" },
           { time: "1:00 PM", activity: "Lunch break" },
-          { time: "2:00 PM", activity: "Building your first ML model" },
+          { time: "2:00 PM", activity: "Building your first Game" },
           { time: "3:30 PM", activity: "Q&A and next steps" }
         ]
       },
-      '2': {
+     /* '2': {
         id: 2,
         name: "Web3 Workshop Series",
         date: "May 10, 2025",
@@ -71,7 +77,7 @@ const EventDetail = () => {
           { time: "2:30 PM", activity: "Building a simple dApp" },
           { time: "4:00 PM", activity: "Deployment and best practices" }
         ]
-      },
+      },*/
       // Add more events as needed
     };
 
@@ -79,14 +85,60 @@ const EventDetail = () => {
     const oldEvents: Record<string, Event> = {
       '101': {
         id: 101,
-        name: "HackWave 2024",
-        date: "January 10, 2024",
-        time: "9:00 AM - 9:00 PM (36 hours)",
+        name: "Game Alchemy",
+        date: "December 07, 2024",
+        time: "10:00 AM - 5:00 PM",
         location: "NexHub HQ",
-        summary: "A 36-hour hackathon where teams built innovative solutions for community challenges.",
-        description: "HackWave 2024 was our biggest hackathon yet, bringing together over 200 developers, designers, and innovators to solve real-world problems. Teams worked for 36 hours straight to build prototypes that addressed community challenges.",
-        image: "/event-hackathon.jpg",
-        organizer: "NexHub Events Team",
+        organizer: "NexHub Community",
+        collaboration: "The UpThrust",
+        audience: "Students, Game Dev Enthusiasts, Tech Learners",
+        objective: "To educate and inspire attendees about the potential of game development as a skill, hobby, and career path.",
+        summary: "Game Alchemy was an immersive game development workshop organized by the NexHub Community in collaboration with The UpThrust, a leading name in the game development industry. Held on December 7, 2024, the event aimed to introduce students and budding developers to the world of game design, development, and monetization. With live demonstrations, expert talks, and hands-on experience using industry-standard tools, the event sparked inspiration among participants and encouraged them to explore careers in game development.",
+        highlights: [
+          {
+            title: "Expert Sessions by The UpThrust",
+            points: [
+              "Industry professionals from The UpThrust shared their insights on the game development industry.",
+              "Topics included game mechanics, level design, art and animations, and in-game economy systems.",
+              "Real-life case studies and behind-the-scenes stories of published games were shared to give a deeper understanding of the process."
+            ]
+          },
+          {
+            title: "Hands-on Learning Experience",
+            points: [
+              "Participants got a chance to work with tools like Unity, Unreal Engine, and Blender.",
+              "Live walkthroughs were conducted to build basic game structures like player controls, environment setups, and enemy mechanics.",
+              "Attendees were encouraged to try out their own ideas using provided assets and tutorials."
+            ]
+          },
+          {
+            title: "AR/VR Game Demos",
+            points: [
+              "Participants experienced AR/VR-based gaming modules and were introduced to the concepts of immersive design and virtual environments."
+            ]
+          },
+          {
+            title: "Career Guidance",
+            points: [
+              "Experts guided students on how to build a portfolio, land internships, and monetize their game projects.",
+              "Sessions also included how to publish games on platforms like Steam, Google Play, and the App Store."
+            ]
+          },
+          {
+            title: "Networking & Q/A",
+            points: [
+              "A Q/A session allowed attendees to interact directly with developers.",
+              "Students also networked with each other and shared their own mini-projects and ideas."
+            ]
+          }
+        ],
+        takeaways: [
+          "Participants received certificates of participation.",
+          "Access to exclusive game dev resources and tools.",
+          "A newfound motivation among students to explore creative technologies like Game Dev, AR/VR, and 3D Design."
+        ],
+        image: "src/assets/OtherImages/GameAlchemyPoster2816.png",
+        youtubeTrailer: "https://youtube.com/shorts/8a5w-PO-f9I?si=V4ZK20ZB-mWB7IEH"
       },
       // Add more previous events
     };
@@ -206,6 +258,93 @@ const EventDetail = () => {
               <p className="text-gray-600 dark:text-gray-300 mb-6">
                 {event.description || event.summary}
               </p>
+
+              {/* YouTube Video for Event Recap */}
+              {event.youtubeTrailer && (
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">Event Video</h3>
+                  <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden">
+                    <iframe 
+                      src={event.youtubeTrailer}
+                      title={`${event.name} Video`}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Event Details for Previous Events */}
+              {isPastEvent && (
+                <div className="mb-8">
+                  {event.collaboration && (
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Event Information</h3>
+                      <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {event.organizer && (
+                          <div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Organized By</p>
+                            <p className="font-medium text-gray-700 dark:text-gray-200">{event.organizer}</p>
+                          </div>
+                        )}
+                        {event.collaboration && (
+                          <div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">In Collaboration With</p>
+                            <p className="font-medium text-gray-700 dark:text-gray-200">{event.collaboration}</p>
+                          </div>
+                        )}
+                        {event.audience && (
+                          <div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Target Audience</p>
+                            <p className="font-medium text-gray-700 dark:text-gray-200">{event.audience}</p>
+                          </div>
+                        )}
+                        {event.objective && (
+                          <div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">Event Objective</p>
+                            <p className="font-medium text-gray-700 dark:text-gray-200">{event.objective}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Event Highlights */}
+                  {event.highlights && event.highlights.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">Event Highlights</h3>
+                      <div className="space-y-6">
+                        {event.highlights.map((highlight, index) => (
+                          <div key={index} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <h4 className="font-bold text-gray-800 dark:text-gray-100 mb-2">{highlight.title}</h4>
+                            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-300">
+                              {highlight.points.map((point, i) => (
+                                <li key={i}>{point}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Event Takeaways */}
+                  {event.takeaways && event.takeaways.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">Takeaways</h3>
+                      <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-300">
+                          {event.takeaways.map((takeaway, index) => (
+                            <li key={index}>{takeaway}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Requirements */}
               {event.requirements && event.requirements.length > 0 && (
