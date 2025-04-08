@@ -357,149 +357,106 @@ export default async function handler(req, res) {
         // Don't throw an error, we'll still consider the submission successful
       } else {
         const transporter = getEmailTransporter();
+
+        const getDivisionName = (division: string): string => {
+          switch (division) {
+            case 'tech':
+              return 'Technical';
+            case 'photography':
+              return 'Photo and Videography';
+            case 'operations':
+              return 'Management';
+            case 'design':
+              return 'Designing';
+            default:
+              return division;
+          }
+        };
         
+
+
         // Prepare email content
         const emailContent = {
           from: `"NexHub Community" <${process.env.SMTP_EMAIL || 'noreply.nexhub@gmail.com'}>`,
           to: formData.email,
           subject: 'NexHub Team Application Received',
           html: `
-          <div class="container">
-  <style>
-    @media only screen and (max-width: 600px) {
-      .container {
-        padding: 20px 15px !important;
-      }
-      .heading {
-        font-size: 24px !important;
-      }
-      .button {
-        padding: 12px 20px !important;
-        font-size: 15px !important;
-      }
-      .social-icons img {
-        width: 22px !important;
-      }
-    }
+          <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>NexHub Application Received</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f3f4f6;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 20px 0;">
+      <tr>
+        <td align="center">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07); padding: 40px 30px; border: 1px solid #e5e7eb; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1f2937;">
+            <tr>
+              <td align="center" style="text-align: center;">
+                <img src="https://github.com/NexHub-Community/nexhub-content/blob/3bf3c8bfb84242e28e3ec78a3e68b7c099442fb1/nexhub-logo-removebg-preview.png?raw=true" alt="NexHub Logo" style="width: 160px; margin-bottom: -20px;" />
+                <h1 style="color: #0f62fe; font-size: 30px; margin: 0;">🎉 Application Received!</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-top: 30px; font-size: 16px;">
+                <p style="margin: 0 0 16px;">Hi <strong>${formData.fullName}</strong>,</p>
+                <p style="margin: 0 0 16px; line-height: 1.6;">
+                  We're thrilled that you want to be a part of <strong style="color: #0f62fe;">NexHub</strong>! Your application for the <strong style="color: #0f62fe;">${getDivisionName(formData.division)}</strong> role has been successfully received.
+                </p>
+                <p style="margin: 0 0 16px; line-height: 1.6;">
+                  Our team is currently reviewing all submissions, and we’ll be reaching out shortly with the next steps. Until then, feel free to explore our community and see what we're building together!
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" style="padding: 30px 0;">
+                <a href="https://nexhubcommunity.vercel.app" target="_blank" style="background-color: #0f62fe; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 500; display: inline-block;">
+                  🌐 Visit NexHub Website
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td style="font-size: 14px; color: #6b7280; text-align: left;">
+                <p style="margin: 0;">Warm regards,<br><strong>The NexHub Team</strong></p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <hr style="margin: 30px 0; border: none; height: 1px; background-color: #e5e7eb;" />
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">Stay connected with us:</p>
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                  <tr>
+                    <td style="padding: 0 8px;">
+                      <a href="https://www.linkedin.com/in/nexhubcommunity/" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width: 26px;" />
+                      </a>
+                    </td>
+                    <td style="padding: 0 8px;">
+                      <a href="https://www.instagram.com/nexhubcommunity/" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 26px;" />
+                      </a>
+                    </td>
+                    <td style="padding: 0 8px;">
+                      <a href="https://chat.whatsapp.com/IrfYbZfyJGrF3KuPiM8ElH" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="width: 26px;" />
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
 
-    .container {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
-      padding: 40px 30px;
-      color: #1f2937;
-      border: 1px solid #e5e7eb;
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    .logo {
-      width: 160px;
-      margin-bottom: -20px;
-    }
-
-    .heading {
-      color: #0f62fe;
-      font-size: 30px;
-      margin-top: 0;
-    }
-
-    .text {
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .button-container {
-      margin: 30px 0;
-      text-align: center;
-    }
-
-    .button {
-      background-color: #0f62fe;
-      color: white;
-      padding: 14px 28px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 500;
-      transition: background-color 0.3s ease;
-      display: inline-block;
-    }
-
-    .footer-text {
-      font-size: 14px;
-      color: #6b7280;
-    }
-
-    .divider {
-      margin: 30px 0;
-      border: none;
-      height: 1px;
-      background-color: #e5e7eb;
-    }
-
-    .social-label {
-      font-size: 14px;
-      color: #9ca3af;
-      margin-bottom: 10px;
-    }
-
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .social-icons img {
-      width: 26px;
-    }
-  </style>
-
-  <div class="center">
-    <img src="https://github.com/NexHub-Community/nexhub-content/blob/3bf3c8bfb84242e28e3ec78a3e68b7c099442fb1/nexhub-logo-removebg-preview.png?raw=true" alt="NexHub Logo" class="logo" />
-    <h1 class="heading">🎉 Application Received!</h1>
-  </div>
-
-  <p class="text" style="margin-top: 30px;">
-    Hi <strong>${formData.fullName}</strong>,
-  </p>
-
-  <p class="text">
-    We're thrilled that you want to be a part of <strong style="color: #0f62fe;">NexHub</strong>! Your application for the <strong style="color: #0f62fe;">${formData.division}</strong> role has been successfully received.
-  </p>
-
-  <p class="text">
-    Our team is currently reviewing all submissions, and we’ll be reaching out shortly with the next steps. Until then, feel free to explore our community and see what we're building together!
-  </p>
-
-  <div class="button-container">
-    <a href="https://nexhubcommunity.vercel.app" target="_blank" class="button">🌐 Visit NexHub Website</a>
-  </div>
-
-  <p class="footer-text">Warm regards,<br><strong>The NexHub Team</strong></p>
-
-  <hr class="divider" />
-
-  <div class="center">
-    <p class="social-label">Stay connected with us:</p>
-    <div class="social-icons">
-      <a href="https://www.linkedin.com/in/nexhubcommunity/" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
-      </a>
-      <a href="https://www.instagram.com/nexhubcommunity/" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
-      </a>
-      <a href="https://chat.whatsapp.com/IrfYbZfyJGrF3KuPiM8ElH" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
-      </a>
-    </div>
-  </div>
-</div>
           `
         };
         
