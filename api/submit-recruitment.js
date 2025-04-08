@@ -358,7 +358,7 @@ export default async function handler(req, res) {
       } else {
         const transporter = getEmailTransporter();
 
-        const getDivisionName = (division: string): string => {
+        const getDivisionName = (division) => {
           switch (division) {
             case 'tech':
               return 'Technical';
