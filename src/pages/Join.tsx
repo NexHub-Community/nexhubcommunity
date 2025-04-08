@@ -951,7 +951,8 @@ const Join = () => {
                         </div>
                         <div>
                           <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                            Upload or link your design portfolio <span className="text-gray-500">(optional)</span>
+                            Upload or link your design portfolio *    
+                            {/* <span className="text-gray-500"></span> */}
                           </label>
                           <div>
                             <a
@@ -984,7 +985,7 @@ const Join = () => {
                               </div>
                               <div className="ml-3">
                                 <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                                  This is optional. You'll be redirected to a separate form to upload your portfolio.
+                                  You'll be redirected to a separate form to upload your portfolio.
                                 </h3>
                               </div>
                             </div>
@@ -1052,7 +1053,8 @@ const Join = () => {
                         </div>
                         <div>
                           <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                            Upload or link to a video or photo album <span className="text-gray-500">(optional)</span>
+                            Upload or link to a video or photo album *
+                            {/* <span className="text-gray-500">(optional)</span> */}
                           </label>
                           <div>
                             <a
@@ -1085,7 +1087,7 @@ const Join = () => {
                               </div>
                               <div className="ml-3">
                                 <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                                  This is optional. You'll be redirected to a separate form to upload your media.
+                                  You'll be redirected to a separate form to upload your media.
                                 </h3>
                               </div>
                             </div>
