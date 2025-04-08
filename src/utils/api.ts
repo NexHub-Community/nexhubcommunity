@@ -5,11 +5,10 @@ import axios from 'axios';
 const getBaseUrl = () => {
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
-    // In production, use environment variable or fall back to window.location.origin
+    // In production, use the same origin as the current page
     if (import.meta.env.PROD) {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      console.log('Production API URL:', apiUrl);
-      return apiUrl || window.location.origin;
+      console.log('Production API URL:', window.location.origin);
+      return window.location.origin;
     }
     // In development, point to the Express server running on port 5000
     console.log('Development API URL: http://localhost:5000');
@@ -166,18 +165,62 @@ export const submitRecruitmentApplication = async (formData: RecruitmentFormData
   try {
     console.log('Original form data:', JSON.stringify(formData, null, 2));
     
-    // Format data according to the Express server API schema in server.js
+    // Format data according to the server's expectations
     const serverData = {
+      // Basic information - always required
       fullName: formData.fullName.trim(),
       email: formData.email.trim(),
       phone: formData.phone.trim(),
-      portfolioLink: formData.portfolio?.trim() || '', // Uses "portfolioLink" instead of "portfolio"
-      role: formData.division.trim(), // Express server expects "role" instead of "division"
-      experience: `${formData.collegeName}, ${formData.branch}, ${formData.year}`, // Combined field for college info
-      message: generateMessage(formData), // Generate a message including all the division-specific details
+      collegeName: formData.collegeName.trim(),
+      branch: formData.branch.trim(),
+      year: formData.year.trim(),
+      
+      // Social profiles - optional
+      linkedin: formData.linkedin?.trim() || '',
+      portfolio: formData.portfolio?.trim() || '',
+      instagram: formData.instagram?.trim() || '',
+      otherLink: formData.otherLink?.trim() || '',
+      
+      // Division selection - required
+      division: formData.division.trim(),
+      
+      // Final section - required
+      weeklyHours: formData.weeklyHours.trim(),
+      comfortableWithMeetings: formData.comfortableWithMeetings === true,
+      privacyPolicy: formData.privacyPolicy === true,
+      termsAccepted: formData.termsAccepted === true,
     };
     
-    console.log('Submitting data to Express server:', JSON.stringify(serverData, null, 2));
+    // Add division-specific fields based on selection
+    if (formData.division === 'tech') {
+      Object.assign(serverData, {
+        programmingLanguages: formData.programmingLanguages?.trim() || 'Not specified',
+        techProject: formData.techProject?.trim() || '',
+        familiarWithFrameworks: formData.familiarWithFrameworks === true,
+        frameworksList: formData.frameworksList?.trim() || '',
+        techContributions: formData.techContributions?.trim() || 'Not specified',
+      });
+    } else if (formData.division === 'operations') {
+      Object.assign(serverData, {
+        hasEventExperience: formData.hasEventExperience === true,
+        eventExperience: formData.eventExperience?.trim() || '',
+        taskManagement: formData.taskManagement?.trim() || 'Not specified',
+        eventSuggestion: formData.eventSuggestion?.trim() || 'Not specified',
+      });
+    } else if (formData.division === 'design') {
+      Object.assign(serverData, {
+        designTools: formData.designTools?.trim() || 'Not specified',
+        designWorkInterest: formData.designWorkInterest?.trim() || 'Not specified',
+      });
+    } else if (formData.division === 'photography') {
+      Object.assign(serverData, {
+        cameraPreference: formData.cameraPreference?.trim() || 'Not specified',
+        contentType: formData.contentType?.trim() || 'Not specified',
+        comfortableWithReels: formData.comfortableWithReels === true,
+      });
+    }
+    
+    console.log('Prepared data for submission:', JSON.stringify(serverData, null, 2));
     
     const response = await api.post('/api/submit-recruitment', serverData);
     return response.data;
