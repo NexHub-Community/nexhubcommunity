@@ -244,10 +244,24 @@ app.post('/api/send-registration-email', async (req, res) => {
 app.post('/api/submit-recruitment', async (req, res) => {
   try {
     console.log('Recruitment form submission received:', req.body);
-    const { fullName, email, phone, portfolioLink, role, experience, message } = req.body;
+    const { fullName, email, phone, portfolio, role, division, collegeName, branch, year } = req.body;
+    
+    // Map division to proper role name if both are present
+    const divisionToRoleMap = {
+      'tech': 'Technical',
+      'operations': 'Management',
+      'design': 'designing',
+      'photography': 'photo and videography'
+    };
+    
+    // Use role if provided, otherwise convert division to appropriate role name
+    const displayRole = role || (division ? divisionToRoleMap[division] || division : 'Not specified');
+    
+    // Construct experience from college fields
+    const experience = `${collegeName || ''}, ${branch || ''}, ${year || ''}`;
     
     // Validate required fields
-    if (!fullName || !email || !role || !experience || !message) {
+    if (!fullName || !email || !displayRole) {
       return res.status(400).json({ 
         success: false, 
         message: 'Missing required fields' 
@@ -263,12 +277,13 @@ app.post('/api/submit-recruitment', async (req, res) => {
       fullName,
       email,
       phone: phone || 'Not provided',
-      portfolioLink: portfolioLink || 'Not provided',
-      role,
+      portfolioLink: portfolio || 'Not provided',
+      role: displayRole,
       experience,
-      message,
       applicationDate: new Date().toISOString(),
-      status: 'Pending Review'
+      status: 'Pending Review',
+      // Include all the original request data
+      originalData: JSON.stringify(req.body)
     };
     
     try {
@@ -309,7 +324,7 @@ app.post('/api/submit-recruitment', async (req, res) => {
             <div style="font-family: Arial; max-width: 600px; margin: 0 auto;">
               <h1>Application Received</h1>
               <p>Hello ${fullName},</p>
-              <p>Thank you for your interest in joining the NexHub team! We've received your application for the <strong>${role}</strong> role.</p>
+              <p>Thank you for your interest in joining the NexHub team! We've received your application for the <strong>${displayRole}</strong> role.</p>
               <p>Your application ID is: <strong>${applicationId}</strong></p>
               <p>Our team will review your application and get back to you soon if your qualifications match our requirements.</p>
               <p>Best regards,<br>NexHub Community Team</p>
