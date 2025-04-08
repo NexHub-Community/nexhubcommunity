@@ -17,6 +17,8 @@ const Join = lazy(() => import('./pages/Join'));
 const EventDetail = lazy(() => import('./pages/EventDetail'));
 const EventRegistration = lazy(() => import('./pages/EventRegistration'));
 const ApiDebug = lazy(() => import('./pages/ApiDebug'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/join" element={<Join />} />
             <Route path="/api-debug" element={<ApiDebug />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           </Routes>
         </Suspense>
       </main>
