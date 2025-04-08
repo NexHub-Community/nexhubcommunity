@@ -405,7 +405,7 @@ export default async function handler(req, res) {
                   We're thrilled that you want to be a part of <strong style="color: #0f62fe;">NexHub</strong>! Your application for the <strong style="color: #0f62fe;">${getDivisionName(formData.division)}</strong> role has been successfully received.
                 </p>
                 <p style="margin: 0 0 16px; line-height: 1.6;">
-                  Our team is currently reviewing all submissions, and we’ll be reaching out shortly with the next steps. Until then, feel free to explore our community and see what we're building together!
+                  Our team is currently reviewing all submissions, and we'll be reaching out shortly with the next steps. Until then, feel free to explore our community and see what we're building together!
                 </p>
               </td>
             </tr>

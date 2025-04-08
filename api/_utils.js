@@ -1,9 +1,9 @@
-const axios = require('axios');
-const nodemailer = require('nodemailer');
-const QRCode = require('qrcode');
+import axios from 'axios';
+import nodemailer from 'nodemailer';
+import QRCode from 'qrcode';
 
 // Function to save registration to Google Sheets using Google Apps Script
-async function saveToSpreadsheet(registrationData) {
+export async function saveToSpreadsheet(registrationData) {
   try {
     console.log('=== SPREADSHEET SUBMISSION START ===');
     
@@ -116,7 +116,7 @@ async function saveToSpreadsheet(registrationData) {
 }
 
 // Generate QR code
-async function generateQRCode(text) {
+export async function generateQRCode(text) {
   try {
     return await QRCode.toDataURL(text);
   } catch (err) {
@@ -126,7 +126,7 @@ async function generateQRCode(text) {
 }
 
 // Get an email transporter
-function getEmailTransporter() {
+export function getEmailTransporter() {
   return nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -142,7 +142,7 @@ function getEmailTransporter() {
 }
 
 // CORS Headers
-function setCorsHeaders(res) {
+export function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
@@ -150,11 +150,4 @@ function setCorsHeaders(res) {
     'Access-Control-Allow-Headers',
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
   );
-}
-
-module.exports = {
-  saveToSpreadsheet,
-  generateQRCode,
-  getEmailTransporter,
-  setCorsHeaders
-}; 
+} 

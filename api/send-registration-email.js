@@ -1,4 +1,4 @@
-const { saveToSpreadsheet, generateQRCode, getEmailTransporter, setCorsHeaders } = require('./_utils');
+import { saveToSpreadsheet, generateQRCode, getEmailTransporter, setCorsHeaders } from './_utils.js';
 
 export default async function handler(req, res) {
   // Set CORS headers
