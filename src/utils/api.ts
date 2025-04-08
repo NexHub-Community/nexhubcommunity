@@ -165,6 +165,14 @@ export const submitRecruitmentApplication = async (formData: RecruitmentFormData
   try {
     console.log('Original form data:', JSON.stringify(formData, null, 2));
     
+    // Map division values to proper role names
+    const divisionToRoleMap: Record<string, string> = {
+      'tech': 'Technical',
+      'operations': 'Management',
+      'design': 'designing',
+      'photography': 'photo and videography'
+    };
+    
     // Format data according to the server's expectations
     const serverData = {
       // Basic information - always required
@@ -181,8 +189,9 @@ export const submitRecruitmentApplication = async (formData: RecruitmentFormData
       instagram: formData.instagram?.trim() || '',
       otherLink: formData.otherLink?.trim() || '',
       
-      // Division selection - required
+      // Division selection mapped to role with proper naming
       division: formData.division.trim(),
+      role: divisionToRoleMap[formData.division.trim()] || formData.division.trim(),
       
       // Final section - required
       weeklyHours: formData.weeklyHours.trim(),
