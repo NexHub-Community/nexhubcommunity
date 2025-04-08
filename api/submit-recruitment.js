@@ -364,13 +364,50 @@ export default async function handler(req, res) {
           to: formData.email,
           subject: 'NexHub Team Application Received',
           html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <h1>Application Received</h1>
-              <p>Hello ${formData.fullName},</p>
-              <p>Thank you for your interest in joining the NexHub team! We've received your application for the ${formData.division} division.</p>
-              <p>Our team will review your application and get back to you soon.</p>
-              <p>Best regards,<br>The NexHub Team</p>
-            </div>
+            <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07); padding: 40px 30px; color: #1f2937; border: 1px solid #e5e7eb;">
+    <div style="text-align: center;">
+      <img src="https://github.com/NexHub-Community/nexhub-content/blob/3bf3c8bfb84242e28e3ec78a3e68b7c099442fb1/nexhub-logo-removebg-preview.png?raw=true" alt="NexHub Logo" style="width: 160px; margin-bottom: -20px;" />
+      <h1 style="color: #0f62fe; font-size: 30px; margin-top: 0;">🎉 Application Received!</h1>
+    </div>
+  
+    <p style="font-size: 16px; margin-top: 30px;">
+      Hi <strong>${formData.fullName}</strong>,
+    </p>
+  
+    <p style="font-size: 16px; line-height: 1.6;">
+      We're thrilled that you want to be a part of <strong style="color: #0f62fe;">NexHub</strong>! Your application for the <strong style="color: #0f62fe;">${formData.division}</strong> division has been successfully received.
+    </p>
+  
+    <p style="font-size: 16px; line-height: 1.6;">
+      Our team is currently reviewing all submissions, and we’ll be reaching out shortly with the next steps. Until then, feel free to explore our community and see what we're building together!
+    </p>
+  
+    <div style="margin: 30px 0; text-align: center;">
+      <a href="https://nexhubcommunity.vercel.app" target="_blank" style="background-color: #0f62fe; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 500; transition: background-color 0.3s ease;">🌐 Visit NexHub Website</a>
+    </div>
+  
+    <p style="font-size: 14px; color: #6b7280;">Warm regards,<br><strong>The NexHub Team</strong></p>
+  
+    <!-- Divider -->
+    <hr style="margin: 30px 0; border: none; height: 1px; background-color: #e5e7eb;" />
+  
+    <!-- Social Media Footer -->
+    <div style="text-align: center;">
+      <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">Stay connected with us:</p>
+      <div style="display: flex; justify-content: center; gap: 16px;">
+        <a href="https://www.linkedin.com/in/nexhubcommunity/" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width: 26px;" />
+        </a>
+        <a href="https://www.instagram.com/nexhubcommunity/" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" style="width: 26px;" />
+        </a>
+        <a href="https://chat.whatsapp.com/IrfYbZfyJGrF3KuPiM8ElH" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="width: 26px;" />
+        </a>
+      </div>
+    </div>
+  </div>
+  
           `
         };
         
