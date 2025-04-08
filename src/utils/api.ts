@@ -11,7 +11,7 @@ const getBaseUrl = () => {
       console.log('Production API URL:', apiUrl);
       return apiUrl || window.location.origin;
     }
-    // In development, use the backend server port
+    // In development, point to the Express server running on port 5000
     console.log('Development API URL: http://localhost:5000');
     return 'http://localhost:5000';
   }
@@ -115,16 +115,117 @@ export const submitEventRegistration = async (eventData: any) => {
   }
 };
 
-// API functions for recruitment applications
-export const submitRecruitmentApplication = async (applicationData: any) => {
+interface RecruitmentFormData {
+  // Basic Information
+  fullName: string;
+  email: string;
+  phone: string;
+  collegeName: string;
+  branch: string;
+  year: string;
+  
+  // Social Profiles
+  linkedin: string;
+  portfolio: string;
+  instagram: string;
+  otherLink?: string;
+  
+  // Division Selection
+  division: string;
+  
+  // Tech & Development specific
+  programmingLanguages?: string;
+  techProject?: string;
+  familiarWithFrameworks?: boolean;
+  frameworksList?: string;
+  techContributions?: string;
+  
+  // Operations & Management specific
+  hasEventExperience?: boolean;
+  eventExperience?: string;
+  taskManagement?: string;
+  eventSuggestion?: string;
+  
+  // Design & Creatives specific
+  designTools?: string;
+  designWorkInterest?: string;
+  
+  // Photography & Cinematics specific
+  cameraPreference?: string;
+  contentType?: string;
+  comfortableWithReels?: boolean;
+  
+  // Final Section
+  weeklyHours: string;
+  comfortableWithMeetings: boolean;
+  privacyPolicy: boolean;
+  termsAccepted: boolean;
+}
+
+export const submitRecruitmentApplication = async (formData: RecruitmentFormData) => {
   try {
-    console.log('Submitting recruitment application:', applicationData);
-    const response = await api.post('/api/submit-recruitment', applicationData);
+    console.log('Original form data:', JSON.stringify(formData, null, 2));
+    
+    // Format data according to the Express server API schema in server.js
+    const serverData = {
+      fullName: formData.fullName.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      portfolioLink: formData.portfolio?.trim() || '', // Uses "portfolioLink" instead of "portfolio"
+      role: formData.division.trim(), // Express server expects "role" instead of "division"
+      experience: `${formData.collegeName}, ${formData.branch}, ${formData.year}`, // Combined field for college info
+      message: generateMessage(formData), // Generate a message including all the division-specific details
+    };
+    
+    console.log('Submitting data to Express server:', JSON.stringify(serverData, null, 2));
+    
+    const response = await api.post('/api/submit-recruitment', serverData);
     return response.data;
   } catch (error) {
-    console.error('Recruitment application API error:', error);
+    console.error('Error submitting application:', error);
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Failed to submit application');
+    }
     throw error;
   }
 };
+
+// Helper function to generate a message with all form details
+function generateMessage(formData: RecruitmentFormData): string {
+  let message = `Weekly Availability: ${formData.weeklyHours} hours\n`;
+  message += `Comfortable with meetings: ${formData.comfortableWithMeetings ? 'Yes' : 'No'}\n\n`;
+  
+  // Add social links if provided
+  if (formData.linkedin) message += `LinkedIn: ${formData.linkedin}\n`;
+  if (formData.instagram) message += `Instagram: ${formData.instagram}\n`;
+  if (formData.otherLink) message += `Other Link: ${formData.otherLink}\n\n`;
+  
+  // Add division-specific information
+  if (formData.division === 'tech') {
+    message += `Programming Languages: ${formData.programmingLanguages || 'Not specified'}\n`;
+    message += `Tech Project: ${formData.techProject || 'Not provided'}\n`;
+    message += `Familiar with Frameworks: ${formData.familiarWithFrameworks ? 'Yes' : 'No'}\n`;
+    if (formData.familiarWithFrameworks) {
+      message += `Frameworks List: ${formData.frameworksList || 'Not specified'}\n`;
+    }
+    message += `Tech Contributions: ${formData.techContributions || 'Not specified'}\n`;
+  } else if (formData.division === 'operations') {
+    message += `Event Experience: ${formData.hasEventExperience ? 'Yes' : 'No'}\n`;
+    if (formData.hasEventExperience) {
+      message += `Event Experience Details: ${formData.eventExperience || 'Not provided'}\n`;
+    }
+    message += `Task Management: ${formData.taskManagement || 'Not specified'}\n`;
+    message += `Event Suggestion: ${formData.eventSuggestion || 'Not specified'}\n`;
+  } else if (formData.division === 'design') {
+    message += `Design Tools: ${formData.designTools || 'Not specified'}\n`;
+    message += `Design Work Interest: ${formData.designWorkInterest || 'Not specified'}\n`;
+  } else if (formData.division === 'photography') {
+    message += `Camera Preference: ${formData.cameraPreference || 'Not specified'}\n`;
+    message += `Content Type: ${formData.contentType || 'Not specified'}\n`;
+    message += `Comfortable with Reels: ${formData.comfortableWithReels ? 'Yes' : 'No'}\n`;
+  }
+  
+  return message;
+}
 
 export default api;
